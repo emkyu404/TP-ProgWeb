@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> TP2 - Exercice 2</title>
+        <meta name="viewport" content="width=device-width">
+        <style>
+
+            /* Question 6 */
+            *{
+                box-sizing: border-box;
+            }
+            html, body{
+                margin :0;
+                background-color : #ccc;
+            }
+            img{
+                display : block;
+                margin : auto;
+                width : 100px; 
+                height : auto;
+                border-radius: 50%;
+                box-shadow: 5px 10px black;
+                margin-top : 5%;
+                margin-bottom : 5%;
+            }
+
+           
+            form{
+                /*
+                ** Question 4 
+
+                width: 100%; border: 1px solid black;
+                padding : 30px; 
+
+                On remarque après l'ajout d'une marge intérieur que le contenu du formulaire n'est désormais plus collé aux bords de la page.
+                Néanmoins le bord du formulaire reste quant à lui toujours collé aux bords de la page.
+                
+
+                 ** Question 5 
+
+                box-sizing: border-box;
+
+                Le bloc du formulaire est désormais adapté à la taille de la fenêtre. Auparavant, il fallait dérouler horizontalement pour 
+                voir l'intégralité de la page (à cause de la propriété width : 100%) */
+
+                /* Question 7 */
+                box-shadow: 5px 10px black;
+                padding : 10px;
+                background-color: white;
+
+                /* Question 8 */
+                display : block;
+                margin : auto;
+                
+                width : 100%;
+                max-width: 1000px;
+
+            }
+
+            button{
+                /* Question 9 */
+                margin : 10px;
+            }
+            
+            
+
+        </style>
+    </head>
+    <body>
+        <header>
+            <img src="logo.png"></img>
+
+            <!-- Question 1 -->
+            <form>
+                <fieldset>
+                    <legend> Formulaire </legend>
+                    <p>
+                        <input name="prenom" type="text" placeholder="Votre prénom"> <!-- L'attribut "placeholder" de la balise input[type="text"] est utilisé pour la question 2-->
+                        <input name="nom" type="text" placeholder="Votre nom">
+                        <input name="mail" type="email" placeholder="Adresse e-mail">
+                        <select name="role">
+                            <option value="enseignant">Enseignant</option>
+                            <option value="etudiant">Etudiant</option>
+                        </select>
+                    </p>
+
+                    <!-- Question 9 -->
+                    <p>
+                        <!-- Question 3 -->
+                        <button> Ajouter </button>
+                        <button> Tout supprimer </button>
+                    </p>
+                </fieldset>
+            </form>
+
+        </header>
+    </body>
+</html>

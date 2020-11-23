@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> TP1 Bis </title>
+        <style>
+
+            body{
+                margin : 0;
+            }
+
+            table{
+                table-layout: fixed;
+                /*border-collapse: collapse;*/
+
+                /* propriété utile pour faire apparaître les cases sous la forme de cercle */
+                border-collapse:separate;
+                border-spacing: 0px;
+                
+            }
+
+            td, th{
+                
+                border : 1px solid black;
+                text-align : left; /* toutes les cellules sont aligné à gauche par défaut */
+                width : 150px;
+            }
+
+            td{
+                border-radius: 50%;
+                width : 150px; /* Les cases sont carrés, de largeur 150px et de hauteur 150px */
+                height : 150px;
+            }
+
+
+            tbody td:hover{
+                cursor : pointer;
+                background-color: black;
+                color: white;
+                transition: 1s;
+            }
+
+            td.align-right, th.align-right{
+                text-align: right; /* Par effet de bord, seul les cellules marqués de la classe="align-right" ont leur texte aligné à droite */
+            }
+
+            tbody tr:nth-child(odd){
+                background-color : grey;
+            }
+            .square{
+                width :100%;
+                height : 100%;
+            }
+
+            td[colspan="2"]{
+                height : 300px; /* dans le cas où une case s'étend sur deux colonnes en largeur, sa hauteur est égale à 300px soit deux fois la hauteur d'une case "normal" */
+
+            }
+
+            .page-content{
+                height : 100vh;
+            }
+
+            footer{
+                bottom : 0;
+                position : fixed;
+                background-color : black;
+                width : 100vw;
+                padding : 20px;
+            }
+
+            th.border-hidden {
+                border:none;
+            }
+
+        </style>
+    </head>
+    <body>      
+        <a href="tp1.html">Lien vers la page tp1.html</a>
+        <br>
+        <table>
+            <thead>
+                <tr>
+                    <th class="align-right">Films préférés</th>
+                    <th>Date de sortie </th>
+                    <th>Note</th>
+                    <th class="border-hidden"></th><th class="border-hidden"></th>
+              
+            </thead>
+            <tbody>
+                <tr> 
+                    <td class="align-right" >La La Land</td>
+                    <td>2016</td>
+                    <td>5/5</td>
+                </tr>
+                <tr> 
+                    <td class="align-right">Interstellar</td>
+                    <td>2014</td>
+                    <td>4.5/5</td>
+                </tr>
+                <tr>
+                    <td class="align-right">Inception</td>
+                    <td>2010</td>
+                    <td>4/5</td>
+                </tr>
+                <tr>
+                    <td colspan = 2 class="align-right">Creed</td>
+                    <td colspan = 3 rowspan=2>3.5/5</td>
+                </tr>
+                <tr>
+                    <td class="align-right">Bladerunner 2049</td>
+                    <td>2017</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- les balises br sont ici pour pouvoir avoir quelque chose à scroll en dessous du tableau -->
+        <br><br><br><br><br><br><br><br><br><br>
+
+    <footer><a href="tp1.html">Lien vers la page tp1.html</a></footer>
+    </body>
+</html>

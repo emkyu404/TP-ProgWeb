@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> TP3 - Exercice 1 </title>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    </head>
+    <body>
+        <!-- Question 5 b-->
+        <div id="app">
+            <p> Mon âge est {{age}}</p>
+        </div>
+
+        <script>
+            // Question 5 a
+            var vm = new Vue({
+                el : "#app",
+                data : {age : 21},
+                methods :{
+                    oneMore : function(){
+                        this.age++
+                    }
+                }
+            });
+            // Question 6
+            window.setInterval(() => {vm.oneMore();}, 1000);
+
+            // Question 7 : La valeur de l'âge est incrémenter toutes les secondes et l'affichage de l'âge est actualisé en conséquence
+        </script>
+    </body>
+</html>

@@ -1,0 +1,111 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> TP2 - Exercice 3</title>
+        <meta name="viewport" content="width=device-width">
+        <style>
+
+            *{
+                box-sizing: border-box;
+                /*Question 7 */
+                font-family: Verdana, Geneva, Tahoma, sans-serif; /* Changement de police de texte */
+            }
+            html, body{
+                margin :0;
+                background-color : #ccc;
+            }
+            img{
+                display : block;
+                margin : auto;
+                width : 100px; 
+                height : auto;
+                border-radius: 50%;
+                box-shadow: 5px 10px black;
+                margin-top : 5%;
+                margin-bottom : 5%;
+            }
+
+           
+            .flex-container {
+                 /* Question 1 */
+                display : flex;
+                flex-direction: row;
+
+                /* Question 3 */
+                flex-wrap: wrap;
+            }
+
+            input, select{
+                 /* Question 1 */
+                flex:1;
+                /* Question 2 */
+                padding : 10px;
+                margin : 10px;
+            }
+
+            input{
+                /* Question 2 */
+                border : none;
+                border-bottom : 1px solid #ccc;
+            }
+
+            /*Question 4*/
+            input:invalid{
+                border-color : red;
+                caret-color : red;
+            }
+
+            form{
+                box-shadow: 5px 10px black;
+                padding : 10px;
+                background-color: white;
+
+                display : block;
+                margin : auto;
+                
+                width : 100%;
+                max-width: 1000px;
+
+            }
+
+            button{
+                margin : 10px;
+                /* Question 5*/
+                text-transform:uppercase; /* Texte toujours en majuscule */
+                border : none; /* pas de bordure */
+                box-shadow: 2px 2px #555; /* ombre */
+                background-color: #ccc; /* Couleur de fond */
+                padding : 10px; /* Marge intérieur */
+            }
+            
+            
+
+        </style>
+    </head>
+    <body>
+        <header>
+            <img src="logo.png"></img>
+
+            <form>
+                <fieldset>
+                    <legend> Formulaire </legend>
+                    <p class="flex-container">
+                        <input name="prenom" type="text" placeholder="Votre prénom" required> <!-- l'attribut "required" est ajouté pour la question 4 -->
+                        <input name="nom" type="text" placeholder="Votre nom" required>
+                        <input name="mail" type="email" placeholder="Adresse e-mail" required>
+                        <select name="role">
+                            <option value="enseignant">Enseignant</option>
+                            <option value="etudiant">Etudiant</option>
+                        </select>
+                    </p>
+                    <p>
+                        <button> Ajouter </button>
+                        <button> Tout supprimer </button>
+                    </p>
+                </fieldset>
+            </form>
+
+        </header>
+    </body>
+</html>

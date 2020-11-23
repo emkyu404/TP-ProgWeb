@@ -1,0 +1,174 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> TP2 - Exercice 5</title>
+        <meta name="viewport" content="width=device-width">
+        <style>
+
+            *{
+                box-sizing: border-box;
+                font-family: Verdana, Geneva, Tahoma, sans-serif; 
+            }
+            html, body{
+                margin :0;
+                background-color : #ccc;
+            }
+            img{
+                display : block;
+                margin : auto;
+                width : 100px; 
+                height : auto;
+                border-radius: 50%;
+                box-shadow: 5px 10px black;
+                margin-top : 5%;
+                margin-bottom : 5%;
+            }
+
+           
+            .flex-container {
+                display : flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+
+            input, select{
+                flex:1;
+                padding : 10px;
+                margin : 10px;
+            }
+
+            input{
+                border : none;
+                border-bottom : 1px solid #ccc;
+            }
+
+            input:invalid{
+                border-color : red;
+                caret-color : red;
+            }
+            main, form{
+                box-shadow: 5px 10px #555;
+                padding : 10px;
+                background-color: white;
+
+                display : block;
+                margin : auto;
+                
+                width : 100%;
+                max-width: 1000px;
+
+                margin-bottom : 30px;
+
+            }
+
+            button{
+                margin : 10px;
+                text-transform:uppercase; 
+                border : none;
+                box-shadow: 2px 2px #555; 
+                background-color: #ccc;
+                padding : 10px;
+            }
+
+
+            table{
+                width : 100%;
+                border-collapse:collapse;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <img src="logo.png"></img>
+
+            <form>
+                <fieldset>
+                    <legend> Formulaire </legend>
+                    <p class="flex-container">
+                        <input id="input-prenom" name="prenom" type="text" placeholder="Votre prénom" required> 
+                        <input id="input-nom" name="nom" type="text" placeholder="Votre nom" required>
+                        <input id="input-mail" name="mail" type="email" placeholder="Adresse e-mail" required>
+                        <select id="input-role" name="role">
+                            <option value="Enseignant">Enseignant</option>
+                            <option value="Etudiant">Etudiant</option>
+                        </select>
+                    </p>
+                    <p>
+                        <button id="bouton-ajouter"> Ajouter </button>
+                        <button id="bouton-reset"> Tout supprimer </button>
+                    </p>
+                </fieldset>
+            </form>
+        </header>
+        <main>
+            <table>
+                <thead>
+                    <th> Prénom </th>
+                    <th> Nom</th>
+                    <th> Mail </th>
+                    <th> Rôle </th>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </main>
+
+
+
+        <script>
+            function ajouter(){
+                /* Question 1*/
+                var prenom = document.querySelector("#input-prenom").value;
+                console.log(prenom); 
+
+                /* Quesetion 2 */
+                var tableau = document.querySelector("table");
+                console.log(tableau);
+                /* On constate que la variable tableau contient la balise table de notre page HTML" */
+
+                /* Question 3*/
+                var tr = document.createElement("tr");
+
+                /* Question 4, 5, */
+                
+                var td1 = document.createElement("td");
+                td1.textContent= document.querySelector("#input-prenom").value;
+                var td2 = document.createElement("td");
+                td2.textContent=document.querySelector("#input-nom").value;
+                var td3 = document.createElement("td");
+                td3.textContent=document.querySelector("#input-mail").value;
+                var td4 = document.createElement("td");
+                td4.textContent=document.querySelector("#input-role").value;
+                
+    
+            
+                tr.appendChild(td1); 
+                tr.appendChild(td2); 
+                tr.appendChild(td3); 
+                tr.appendChild(td4);
+                /* Dans la structure de notre tableau, on distingue le corps du tableau (tbody) de son entête (thead), nous ajoutons donc les nouvelles lignes dans la balise tbody 
+                   De cette manière, on évitera par la suite de supprimer l'entête dans la fonciont supprimer()
+                */
+                if(document.querySelector("#input-mail").validity.valid && document.querySelector("#input-prenom").validity.valid && document.querySelector("#input-nom").validity.valid)
+                    document.querySelector("tbody").appendChild(tr);  
+            }
+
+            function supprimer(){
+                var tableau = document.querySelector("tbody"); // Voir commentaire dans la fonction "ajouter" concernant la selection de la balise tbody au lieu de
+                tableau.innerHTML = "";
+            }
+
+            document.querySelector("#bouton-ajouter").addEventListener("click",function(event){
+                event.preventDefault();
+                ajouter();
+            })
+
+            document.querySelector("#bouton-reset").addEventListener("click",function(event){
+                event.preventDefault();
+                supprimer();
+            })
+        </script>
+    </body>
+</html>

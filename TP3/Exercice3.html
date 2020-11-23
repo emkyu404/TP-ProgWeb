@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> TP3 - Exercice 3 </title>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+        <style>
+            .bold{
+                font-weight: bold;
+            }
+
+            .default{
+                font-weight: normal;
+            }
+        </style>
+
+    </head>
+    <body>
+        <div id="app">
+            <p> {{currentFruit}} </p> <!-- Question 4-->
+            <ul>
+                <!-- Question 3 -->
+                <li v-for="fruit in fruits">
+                    <div style="display: inline-block;" v-on:click="deleteFruit(fruit)">❌</div>
+                    <div style="display: inline-block;" v-on:click="changeCurrentFruit(fruit)" v-bind:class="{bold:isCurrentFruit(fruit), default:!isCurrentFruit(fruit)}">{{fruit}}</div>
+                </li> 
+            </ul>
+        </div>
+        <script>
+            var vm = new Vue({
+                el : "#app",
+                data : {
+                    fruits : ['Pomme', 'Orange', 'Fraise', 'Melon', 'Cerise'],// Question 2
+                    currentFruit : 'Pomme' //Question 4
+                },
+                methods : {
+                    changeCurrentFruit: function(fruit){
+                        this.currentFruit = fruit
+                    },
+
+                    // Question 7
+                    // Fonction retournant un booléen, vrai si le paramètre fruit correspond à currentFruit, faux sinon
+                    isCurrentFruit: function(fruit){
+                        return this.currentFruit === fruit
+                    },
+
+                    // Question 8
+                    deleteFruit: function(fruit){
+                        var index = this.fruits.indexOf(fruit)
+                        if(index !== -1) // Si la valeur a bien été trouvé dans le tableau fruits
+                            this.fruits.splice(index, 1) 
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>

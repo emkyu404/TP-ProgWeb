@@ -1,9 +1,62 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <!-- Exercice 2 -->
+        <title> Je suis la page du TP1 </title>
 
+        <style>
+            p {
+                background-color : red;
+            }
+
+            #deuxieme-paragraphe {
+                text-shadow : 10px 5px 5px black;
+            }
+
+            h1, h2{
+                border-bottom : 1px solid black;
+            }
+            /*Exercice 5 */
+            ol li {
+                list-style-type: square; /* à enlever pour faire apparaître la numération sur la liste */
+                display : inline; /* à enlever pour faire apparaître la liste verticalement */
+            }
+
+            li{
+                border : 1px solid black;
+                border-radius: 10px;
+            }
+
+            li:hover{
+                cursor : pointer;
+                background-color : pink;
+            }
+
+        </style>
     </head>
     <body>
-        
+        <!-- Exercice 3 -->
+        <h1> TP1 </h1>
+        <p><strong>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</strong>
+            Aenean imperdiet placerat est ac condimentum. 
+            Nulla accumsan lectus a nibh scelerisque venenatis. 
+            In in efficitur justo. <br> Quisque vel nulla et nibh gravida egestas. 
+            Pellentesque lobortis interdum magna vel vulputate. 
+            Etiam facilisis vulputate pharetra. Cras eu massa urna.</p>
+        <h2> Je suis un titre secondaire</h2>
+
+        <p id="deuxieme-paragraphe">Je suis un nouveau paragraphe</p>
+
+        <!-- Exercice 4 -->
+        <ol>
+            <li> La La Land </li>
+            <li> Interstellar </li>
+            <li> Inception </li>
+            <li> Creed </li>
+            <li> Bladerunner 2044</li>
+        </ol>
+
+
+
     </body>
 </html>

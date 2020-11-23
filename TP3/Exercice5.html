@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> TP3 - Exercice 5 </title>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+        <style>
+            html, body{
+                font-family : 'Roboto', sans-serif;
+            }
+
+            fieldset{
+                background-color : #ddd;
+            }
+
+            .form-field{
+                margin : 10px;
+            }
+
+            input[type="text"], input[type="textarea"]{
+                background-color : white;
+                padding : 10px;
+                border : none;
+            }
+
+            textarea{
+                font-family : 'Roboto', sans-serif;
+            }
+
+            li{
+                color : grey;
+                list-style-type : "→  ";
+                
+            }
+            li:hover{
+                transition : 0.2s;
+                color : black;
+                cursor : pointer;
+            }
+
+        </style>
+    </head>
+    <body>
+
+        <div id="app">
+            <header>
+                <!-- Formulaire pour ajouter une tâche -->
+                <form>
+                    <fieldset>
+                        <legend> Ajouter une nouvelle tâche </legend>
+                        <div class="form-field"><label style="display: block;" for="title">Titre de la tâche : </label><input v-model="currentT" type="text" name="title" placeholder="Indiquer le titre de la tâche"></div>
+                        <div class="form-field"><label style="display: block;"for="content"> Description de la tâche : </label><textarea v-model="currentC" type="textarea" rows="5" cols="40" wrap="hard" name="content" placeholder="Indiquer le contenu de la tâche"></textarea></div>
+                        <div class="form-field"><label for="done">Tâche terminée </label><input v-model="currentD" type="checkbox" name="done"></div>
+                        <div class="form-field"><button v-on:click="addTodo">Ajouter</button></div>
+                    </fieldset>
+                </form>
+            </header>
+
+            <main style="border-bottom : 1px solid black; width : 100%; padding : 5vw;">
+                <!-- Affichage de la liste des tâches, une tâche par défaut est déjà initialisé -->
+                <h3> Liste des tâches </h1>
+                <li v-for="todo in todos">
+                    <!-- Affichage du titre de la tâche et sur le clique de ce titre, affiche une alerte contenant la description de la tâche -->
+                    <div v-on:click="displayContent(todo)" style="display: inline-block;">{{todo.title}}</div>
+                    <!-- Gestion de l'icône à côté du titre de la tâche pour indiquer son état (fini ou non) -->
+                    <div v-if="!todo.done" v-on:click="changeState(todo)" style="display : inline-block">❌</div>
+                    <div v-else v-on:click="changeState(todo)" style="display : inline-block">✔️</div>
+                </li>
+            </main>
+
+            <!-- Section pour expliquer comment intéragir avec la liste des tâches-->
+            <footer>
+                <h3> Utilisation : </h3>
+                <p> Cliquer sur l'état d'une tâche : modification de son état (fini ou pas fini)</p>
+                <p> Cliquer sur le titre d'une tâche : affiche une alerte avec la description de la tâche </p>
+            </footer>
+        </div>
+        <script>
+            var vm = new Vue({
+                el : "#app",
+                data : {
+                    // todos : liste d'objet "todo" contenant un titre (title), une description (content) et un booléen (done)
+                    todos : [{title : "Rendu du TD3", content : "Terminer le TD3 de Programmation Web pour le 25/11/2020", done : true}],
+                    currentT : "",
+                    currentC : "",
+                    currentD : false
+                },
+
+                methods : {
+                    // Méthode d'ajout d'une nouvelle tâche avec le formulaire
+                    addTodo : function(){
+                        event.preventDefault(); // Gestion du comportement par défaut des boutons dans un formulaire
+                        if(this.currentT !== "" && this.currentC !=="" && this.currentD !== null){
+                            var obj = {title : this.currentT, content : this.currentC, done : this.currentD}
+                            this.todos.push(obj)
+                        } else{
+                            alert("Erreur : le formulaire n'a pas été bien renseigné. Veuillez recommencer.") // Gestion de l'erreur si les champs sont vides.
+                        }
+                    },
+
+                    // Méthode pour changer l'état d'une tâche, sur clique de l'icône
+                    changeState : function(todo){
+                        todo.done = !todo.done
+                    },
+
+                    // Méthode pour afficher la description de la tâche sur clique du titre de la tâche
+                    displayContent : function(todo){
+                        alert(todo.content)
+                    }
+                }
+            })
+        </script>
+
+    </body>
+</html>

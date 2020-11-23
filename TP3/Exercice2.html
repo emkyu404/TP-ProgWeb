@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> TP3 - Exercice 2 </title>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+        <style>
+            /* Question 6 */
+            .white{
+                background-color: black;
+                color : white;
+            }
+
+            .black{
+                background-color : white;
+                color : black;
+            }
+        </style>
+
+    </head>
+    <body>
+      
+        <div id="app">
+            <!-- Question 4 -->
+            <button v-on:click="inverser">Changer la couleur</button>
+            <!-- Question 5 -->
+            <!--
+            <div v-if="isWhite" style="color : white" >{{text}}</div>
+            <div v-else style="color : black">{{text}}</div>
+            -->
+            <!-- Question 6 -->
+            <div v-bind:class="{white : isWhite, black : !isWhite}"> {{myText}} </div>
+       </div>
+
+       <script>
+        var vm = new Vue({
+         el : "#app",
+         data : {
+             isWhite : false,// Question 2
+             myText : "NOIR" // Question 7
+         },
+         methods:{
+             inverser(){
+                 //Question 3
+                 this.isWhite = !this.isWhite;
+                 // Question 7
+                 if(this.isWhite)
+                    this.myText = "BLANC";
+                 else
+                    this.myText = "NOIR";
+             }
+         }
+        })
+    </script>
+    </body>
+</html>

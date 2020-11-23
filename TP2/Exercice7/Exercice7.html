@@ -1,0 +1,242 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> TP2 - Exercice 7</title>
+        <meta name="viewport" content="width=device-width">
+        <style>
+
+            *{
+                box-sizing: border-box;
+                font-family: Verdana, Geneva, Tahoma, sans-serif; 
+            }
+            html, body{
+                margin :0;
+                background-color : #ccc;
+            }
+            img{
+                display : block;
+                margin : auto;
+                width : 100px; 
+                height : auto;
+                border-radius: 50%;
+                box-shadow: 5px 10px black;
+                margin-top : 5%;
+                margin-bottom : 5%;
+            }
+            
+
+           
+            .flex-container {
+                display : flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+
+            input, select{
+                flex:1;
+                padding : 10px;
+                margin : 10px;
+            }
+
+            input{
+                border : none;
+                border-bottom : 1px solid #ccc;
+            }
+
+            input:invalid{
+                border-color : red;
+                caret-color : red;
+            }
+            main, form{
+                box-shadow: 5px 10px #555;
+                padding : 10px;
+                background-color: white;
+
+                display : block;
+                margin : auto;
+                
+                width : 100%;
+                max-width: 1000px;
+
+                margin-bottom : 30px;
+
+            }
+
+            button{
+                margin : 10px;
+                text-transform:uppercase; 
+                border : none;
+                box-shadow: 2px 2px #555; 
+                background-color: #ccc;
+                padding : 10px;
+            }
+
+
+            table{
+                border-collapse:collapse;
+                width : 100%;
+                text-align: center;
+            }
+
+            td, th{
+                padding : 10px;
+                margin : 1px;
+                border-bottom : 1px #555 solid;
+                min-width: fit-content;
+            }
+
+            tr#last td{
+                border-bottom : none;
+            }
+
+            main{
+                display:block;
+                overflow : auto;
+            }
+
+            .sticky{
+                position:fixed;
+                top:0;
+                width :100%;
+                right:0;
+                left:0;
+                margin-right:auto;
+                margin-left:auto;
+            }
+            
+        </style>
+    </head>
+    <body>
+        <header>
+            <img src="logo.png"></img>
+
+            <form>
+                <fieldset>
+                    <legend> Formulaire </legend>
+                    <p class="flex-container">
+                        <input id="input-prenom" name="prenom" type="text" placeholder="Votre prénom" required> 
+                        <input id="input-nom" name="nom" type="text" placeholder="Votre nom" required>
+                        <input id="input-mail" name="mail" type="email" placeholder="Adresse e-mail" required>
+                        <select id="input-role" name="role">
+                            <option value="Enseignant">Enseignant</option>
+                            <option value="Etudiant">Etudiant</option>
+                        </select>
+                    </p>
+                    <p>
+                        <button id="bouton-ajouter"> Ajouter </button>
+                        <button id="bouton-reset"> Tout supprimer </button>
+                    </p>
+                </fieldset>
+            </form>
+        </header>
+        <main>
+            <table>
+                <thead>
+                    <th> Prénom </th>
+                    <th> Nom</th>
+                    <th> Mail </th>
+                    <th> Rôle </th>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </main>
+
+
+
+        <script>
+            var canUseAjouter = false; // Variable essentiel pour gérer la désactivation du bouton "Ajouter"
+            function ajouter(){
+                var lastRow = document.querySelector("#last");
+                if(lastRow != null){
+                    lastRow.setAttribute("id", "");
+                }
+
+                var tr = document.createElement("tr");
+                tr.setAttribute("id", "last");
+                var td1 = document.createElement("td");
+                td1.textContent= document.querySelector("#input-prenom").value;
+                var td2 = document.createElement("td");
+                td2.textContent=document.querySelector("#input-nom").value;
+                var td3 = document.createElement("td");
+                td3.textContent=document.querySelector("#input-mail").value;
+                var td4 = document.createElement("td");
+                td4.textContent=document.querySelector("#input-role").value;
+                tr.appendChild(td1); 
+                tr.appendChild(td2); 
+                tr.appendChild(td3); 
+                tr.appendChild(td4);
+                if(document.querySelector("#input-mail").validity.valid && document.querySelector("#input-prenom").validity.valid && document.querySelector("#input-nom").validity.valid){
+                    document.querySelector("tbody").appendChild(tr);  
+                    /* Question 1 */
+                    canUseAjouter = false;
+                    disableAjouter();
+                }else{
+                    alert("Les champs ne sont pas correct.");
+                }
+            }
+
+            function supprimer(){
+                var tableau = document.querySelector("tbody"); 
+                tableau.innerHTML = "";
+            }
+
+            document.querySelector("#bouton-ajouter").addEventListener("click",function(event){
+                event.preventDefault();
+                if(canUseAjouter){
+                ajouter();
+                }else{
+                    /* Question 4*/
+                    alert("Vous devez patienter avant de pouvoir ajouter une nouvelle ligne.")
+                }
+            })
+
+            document.querySelector("#bouton-reset").addEventListener("click",function(event){
+                event.preventDefault();
+                supprimer();
+            })
+
+           var limitHeight = document.querySelector("header").offsetTop + document.querySelector("form").offsetTop;
+           window.onscroll = function(){
+                var header = document.querySelector("header");
+                var main = document.querySelector("main");
+
+                console.log(window.pageYOffset);
+                
+                console.log("limitHeight : " + limitHeight);
+                if(window.pageYOffset >= limitHeight){
+                    document.querySelector("form").classList.add("sticky");
+                    main.style.marginTop = (limitHeight + 60)+"px";
+                }else{
+                    document.querySelector("form").classList.remove("sticky");
+                    main.style.marginTop = "";
+                }
+            };
+
+
+            /* Question 1 et 2 */
+            window.onload = function(){
+                disableAjouter(); // Au lancement on lance une fois la routine "disableAjouter"
+            }
+
+            function disableAjouter(){
+                compteur = 10;
+                var button = document.querySelector("#bouton-ajouter");
+                button.innerHTML = "(" + compteur + ")";
+                button.style.color = "#aaa"; // Question 3
+                x= setInterval(function(){
+                    compteur--;
+                    button.innerHTML = "(" + compteur + ")";
+                    if(compteur === 0){
+                        canUseAjouter = true;
+                        button.style.color = "black"; // Question 3
+                        button.innerHTML = "ajouter";
+                        clearInterval(x);
+                    }
+                }, 1000);
+            }
+        </script>
+    </body>
+</html>

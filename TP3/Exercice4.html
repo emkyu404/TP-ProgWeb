@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> TP3 - Exercice 4 </title>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    </head>
+    <body>
+
+        <div id="app">
+            <!-- Question 3 -->
+            <article v-for="c in cours"> {{c}} </article><br>
+            <!-- Question 4 -->
+            <input v-model="newC" placeholder="Ajouter cours" type="text">
+            <button v-on:click="ajouterCours">Ajouter le cours</button>
+            <!-- Question 5-->
+            <br><br>
+            <input v-model="updateC" placeholder="Modifier cours" type="text">
+            <select v-model="currentC"><option v-for="c in cours">{{c}}</option></select>
+            <button v-on:click="updateCours">Modifier</button>
+        </div>
+        <script>
+            var vm = new Vue({
+                el : "#app",
+                data : {
+                    newC : "",
+                    updateC : "",
+                    currentC : "Algorithme",
+                    cours : ['Algorithme', 'Structures de données', 'Programmation web', 'Web Avancé', 'Front-end Web Development', 'Asynchronous Event-Driven Programming with Node.js'] // Question 2
+                },
+
+                methods : {
+                    // Question 4
+                    ajouterCours : function(){
+                        if(this.newC !== "")
+                            this.cours.push(this.newC)
+                        else
+                            alert("Veuillez renseigner un cours")
+                    },
+
+                    // Question 6
+                    updateCours : function(){
+                        var index = this.cours.indexOf(this.currentC);
+                        if(index !== -1 && this.updateC !== ""){
+                            this.cours.splice(index, 1)
+                            this.cours.splice(index, 0, this.updateC)
+                        } else{
+                           alert("Veuillez renseigner un cours à modifier");
+                        }
+                    }
+                }   
+            })
+        </script>
+    </body>
+</html>
