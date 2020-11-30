@@ -11,7 +11,8 @@
           <div>
           <button @click="deleteArticle(article.id)">Supprimer</button>
           <button @click="editArticle(article)">Modifier</button>
-          <button @click="addToPanier(article.id)">Ajouter au panier</button>
+          <button @click="addToPanier(article.id)" v-if="!panier.articles.includes(article)">Ajouter au panier</button>
+          <button @click="removeFromPanier(article.id)" v-else> Retirer du panier</button>
           </div>
         </div>
         <p>{{ article.description }}</p>
@@ -41,7 +42,7 @@ module.exports = {
   },
   props: {
     articles: { type: Array, default: [] },
-    panier: { type: Object }
+    panier: {type: Object}
   },
   data () {
     return {
