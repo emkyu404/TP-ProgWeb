@@ -2,6 +2,17 @@ const express = require('express')
 const { forEach } = require('../data/articles.js')
 const router = express.Router()
 const articles = require('../data/articles.js')
+const bcrypt = require('bcrypt')
+const { Client } = require('pg')
+
+const client = new Client({
+  user : 'postgres',
+  host : 'localhost',
+  password : 'motdepasse1234',
+  database : 'TP5'
+})
+
+client.connect()
 
 class Panier {
   constructor () {
@@ -30,6 +41,55 @@ router.use((req, res, next) => {
   }
   next()
 })
+
+/**
+ * TP5 - Question 4
+ * Ajout d'une nouvelle route POST /register pour l'inscription de l'utilisateur
+ */
+router.post('/register', (req, res) => {
+
+  /* Question 4.a */
+  const email = req.body.email
+  const password = req.body.password
+
+  console.log('email : '+ email + ' // password : ' + password)
+
+  /* Question 4.b à 4.d*/
+  register(res, email,password)
+
+
+})
+
+/**
+ * Question 4.b à 4.d
+ * Ajout d'une fonction asynchrone pour la réalisation de l'inscription utilisateur
+ * @param {email} email 
+ * @param {password} password 
+ */
+async function register(res, email, password){
+
+  /* Préparation de la requête pour retourner le nombre de tuple où l'email correspond à celui indiqué dans le body */
+  const sql1 = 'SELECT COUNT(email) FROM users WHERE email=$1'
+  const result1 = await client.query({
+    text : sql1,
+    values : [email]
+  })
+  
+  /* On compte le nombre de tuple renvoyer par la requête ci-dessus. Si le résultat est égal ou supérieur à 1, on renvoit une erreur */
+  if(result1.rows[0].count >= 1){
+    res.status(400).json({message : 'User already registered with this email and password'})
+  }
+  /* Sinon, on insere le nouvelle utilisateur dans la table 'users' le nouvelle utilisateur  */
+  else{
+    const hash = await bcrypt.hash(password, 10)
+    const sql2 = 'INSERT INTO users (email,password) values ($1,$2)'
+    await client.query({
+      text : sql2,
+      values : [email, hash]
+    })
+    res.json({message : 'Successfully registered'})
+  }
+}
 
 /*
  * Cette route doit retourner le panier de l'utilisateur, grâce à req.session

@@ -1,9 +1,11 @@
 const Home = window.httpVueLoader('./components/Home.vue')
 const Panier = window.httpVueLoader('./components/Panier.vue')
+const Register = window.httpVueLoader('./components/Register.vue')
 
 const routes = [
   { path: '/', component: Home },
   { path: '/panier', component: Panier },
+  { path: '/register', component: Register} // Exercice 1 Question 5
 ]
 
 const router = new VueRouter({
@@ -64,6 +66,10 @@ var app = new Vue({
       const articleToModify = this.panier.articles.find(a => a.id === article.id)
       articleToModify.qte = newQte
       console.log("Mise à jour de la quantité")
+    },
+
+    async registerUser(user){
+      await axios.post('/api/register', user)
     }
   }
 })
