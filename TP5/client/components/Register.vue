@@ -3,40 +3,54 @@
         <legend> Inscription utilisateur </legend>
         <fieldset>
             <div><label for="email"> Email </label></div>
-            <div><input v-model="newUser.email" type="email" name="email" placeholder="Votre email" required></div>
+            <div><input v-model="newUser.email" type="email" name="email" placeholder="Email" required></div>
             <div><label for="password"> Mot de passe </label></div>
-            <div><input v-model="newUser.password" type="password" name="password" required></div>
+            <div><input v-model="newUser.password" type="password" placeholder="Mot de passe" name="password" required></div>
             <div><label for="confirmPassword"> Confirmer le mot de passe </label></div>
-            <div><input v-model="confirmPassword" type="password" name="confirmPassword" required></div>
+            <div><input v-model="newUser.confirmPassword" type="password" placeholder="Confirmer mot de passe" name="confirmPassword" required></div>
             <div><input type="submit" value="S'inscrire"></div>
+            <div><a v-on:click="redirectToLog"> Déjà inscrit ? </a>
         </fieldset> 
     </form>
 </template>
 
 <script>
-module.export = {
+module.exports = {
     data(){
         return{
             newUser: {
-                email : '',
-                password: ''
+                email: '',
+                password: '',
+                confirmPassword:''
             }
         }
     },
 
-    methods: { 
+    methods: {
+        async mounted () {
+        },
         verifyPasswordMatch(){
-            return this.newUser.password === this.confirmPassword
+            console.log(this.newUser.password === this.newUser.confirmPassword)
+            return this.newUser.password === this.newUser.confirmPassword
         },
 
         registerUser(){
-            if(this.verifyPasswordMatch)
-                this.$emit('register-user', this.newUser)
+            if(this.verifyPasswordMatch()){
+                const userToRegister = {email: this.newUser.email, password : this.newUser.password}
+                console.log(userToRegister)
+                this.$emit('register-user', userToRegister)
+            }
+            else{
+                window.alert("Les mots de passes ne sont pas identiques")
+            }
+        },
+
+        redirectToLog(){
+            router.push('/login')
         }
     },
 
     props:{
-        confirmPassword:''
     }
     
 }

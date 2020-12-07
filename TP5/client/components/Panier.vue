@@ -13,6 +13,7 @@
         </tr>
       </tbody>
     </table>
+    <button @click="payCart"> Payer </button>
   </div>
 </template>
 
@@ -32,6 +33,12 @@ module.exports = {
     updateArticleQte(article){
       console.log(article)
       this.$emit('update-article-qte', article)
+    },
+
+    payCart(){
+      if(this.panier.articles.length > 0){
+        this.$emit('pay-cart', this.panier.articles)
+      }
     }
   }
 }

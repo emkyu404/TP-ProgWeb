@@ -1,11 +1,13 @@
 const Home = window.httpVueLoader('./components/Home.vue')
 const Panier = window.httpVueLoader('./components/Panier.vue')
 const Register = window.httpVueLoader('./components/Register.vue')
+const Login = window.httpVueLoader('./components/Login.vue')
 
 const routes = [
   { path: '/', component: Home },
   { path: '/panier', component: Panier },
-  { path: '/register', component: Register} // Exercice 1 Question 5
+  { path: '/register', component: Register}, 
+  { path: '/login', component: Login}
 ]
 
 const router = new VueRouter({
@@ -68,8 +70,23 @@ var app = new Vue({
       console.log("Mise à jour de la quantité")
     },
 
-    async registerUser(user){
-      await axios.post('/api/register', user)
+    async registerUser(newUser){
+      await axios.post('/api/register', newUser)
+    },
+
+    async loginUser(user){
+      await axios.post('/api/login', user)
+    },
+
+    async payCart(articles){
+      await axios.post('/api/panier/pay').then(function(res) {
+        if(res.data.valid){
+          alert(res.data.message)
+        }else{
+          alert(res.data.message)
+          router.push('/login')
+        }
+      })
     }
   }
 })

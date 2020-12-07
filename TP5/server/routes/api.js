@@ -43,7 +43,7 @@ router.use((req, res, next) => {
 })
 
 /**
- * TP5 - Question 4
+ * TP5 - Exercice 2
  * Ajout d'une nouvelle route POST /register pour l'inscription de l'utilisateur
  */
 router.post('/register', (req, res) => {
@@ -69,14 +69,14 @@ router.post('/register', (req, res) => {
 async function register(res, email, password){
 
   /* Préparation de la requête pour retourner le nombre de tuple où l'email correspond à celui indiqué dans le body */
-  const sql1 = 'SELECT COUNT(email) FROM users WHERE email=$1'
+  const sql1 = 'SELECT email FROM users WHERE email=$1'
   const result1 = await client.query({
     text : sql1,
     values : [email]
   })
   
   /* On compte le nombre de tuple renvoyer par la requête ci-dessus. Si le résultat est égal ou supérieur à 1, on renvoit une erreur */
-  if(result1.rows[0].count >= 1){
+  if(result1.rowCount >= 1){
     res.status(400).json({message : 'User already registered with this email and password'})
   }
   /* Sinon, on insere le nouvelle utilisateur dans la table 'users' le nouvelle utilisateur  */
@@ -89,6 +89,67 @@ async function register(res, email, password){
     })
     res.json({message : 'Successfully registered'})
   }
+}
+
+
+/**
+ * TP5 - Exercice 3
+ * Ajout d'une nouvelle route POST /login pour la connexion utilisateur
+ */
+router.post('/login', (req, res) => {
+  if(req.session.userId != null){
+    res.status(401).json({message:'User already authentified in this session'})
+  }else{
+    const email = req.body.email
+    const password = req.body.password
+
+    console.log('email : '+ email + ' // password : ' + password)
+
+    login(res, req, email, password)
+  }
+})
+
+async function login(res, req, email, password){
+  const sql = "SELECT id, email, password from users WHERE email=$1"
+  const result = await client.query({
+    text : sql,
+    values : [email]
+  })
+
+  if(result.rowCount == 1){
+    if(await bcrypt.compare(password, result.rows[0].password)){
+      req.session.userId = result.rows[0].id
+      console.log(req.session)
+      res.json({message: 'Successfully logged in'})
+    }else{
+      res.status(400).json({message: 'Wrong password'})
+    }
+  }
+  else{
+    res.status(404).json({message: 'User not found in database'})
+  }
+}
+
+
+/**
+ * TP5 - Exercice 4
+ * Ajout d'une nouvelle route GET /me pour retourner l'utilisateur connecté
+ */
+router.get('/me', (req,res)=>{
+  if(req.session.userId != null){
+    me(res, req.session.userId)
+  }else{
+    res.status(401).json({message:'User not connected'})
+  }
+})
+
+async function me(res, userId){
+  const sql = "SELECT email FROM users WHERE id=$1"
+  const result = await client.query({
+    text: sql,
+    values: [userId]
+  })
+  res.json({message : 'User connected [id : ' + userId + ', email : ' + result.rows[0].email} + ']')
 }
 
 /*
@@ -139,11 +200,12 @@ router.post('/panier', (req, res) => {
  * Le panier est ensuite supprimé grâce à req.session.destroy()
  */
 router.post('/panier/pay', (req, res) => {
-  const firstName = req.body.firstName
-  const lastName = req.body.lastName
-
-  req.session.destroy()
-  res.json({message :'Merci ' + firstName +' '+ lastName + ' pour votre achat'})
+  if(req.session.userId != null){
+    req.session.destroy()
+    return res.json({message :'Merci pour votre achat', valid: true})
+  }else{
+    return res.json({message : 'Cannot proceed to purchase : user not connected', valid: false})
+  }
 })
 
 /*

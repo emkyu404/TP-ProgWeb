@@ -16,7 +16,8 @@
             <nav>
               <router-link to='/'>Accueil</router-link>
               <router-link to='/panier'>Panier</router-link>
-              <router-link to='/register'>Register</router-link>
+              <router-link to='/register'> Inscription </router-link>
+              <router-link to='/login'> Connexion </router-link>
             </nav>
           </header>
           <main>
@@ -30,6 +31,8 @@
               @remove-from-panier="removeFromPanier"
               @update-article-qte="updateArticleQte"
               @register-user="registerUser"
+              @login-user="loginUser"
+              @pay-cart="payCart"
             ></router-view>
           </main>
         </div>
