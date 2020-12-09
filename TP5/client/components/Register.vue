@@ -1,6 +1,6 @@
 <template>
-    <form @submit.prevent="registerUser">
-        <legend> Inscription utilisateur </legend>
+    <form id="register-form" @submit.prevent="registerUser">
+        <legend> Inscription </legend>
         <fieldset>
             <div><label for="email"> Email </label></div>
             <div><input v-model="newUser.email" type="email" name="email" placeholder="Email" required></div>
@@ -56,5 +56,47 @@ module.exports = {
 }
 </script>
 
-<style>
+<style scoped>
+    #register-form{
+        width : 500px;
+        margin : auto;
+        background-color : #333;
+        color : white;
+        padding : 20px;
+    }
+
+    #register-form legend{
+        text-align : center;
+        font-size : 24px;
+    }
+
+    #register-form fieldset{
+        border:none;
+        display : flex;
+        flex-direction: column;
+        flex-wrap : wrap;
+        justify-content: space-evenly;
+    }
+    #register-form fieldset div{
+        flex : 1;
+        width : 100%;
+    }
+
+    #register-form fieldset input{
+        width : 100%;
+        margin : auto;
+        margin-bottom : 20px;
+        padding : 10px;
+    }
+
+    #register-form fieldset a{
+        color : white;
+        text-decoration: underline;
+    }
+
+    #register-form fieldset a:hover{
+        color : cyan;
+        cursor : pointer;
+    }
+
 </style>

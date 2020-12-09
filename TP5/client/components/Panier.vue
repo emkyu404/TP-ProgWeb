@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="my-cart">
     <h2>Mon Panier</h2>
     <table>
       <thead>
@@ -45,4 +45,51 @@ module.exports = {
 </script>
 
 <style scoped>
+  #my-cart{
+    width :fit-content;
+    margin : auto;
+    margin-top : 5%;;
+    background-color : #ccc;
+    padding : 30px;
+  }
+
+  #my-cart h2{
+    text-align : center;
+  }
+
+  #my-cart table{
+    min-width :300px;
+    text-align : center;
+    border-collapse: collapse;
+    margin-bottom : 10px;
+  }
+
+  #my-cart thead, tbody{
+    border-bottom : solid 2px #333;
+    margin-bottom : 10px;
+  }
+
+  #my-cart td{
+    padding : 10px;
+  }
+
+  #my-cart td input{
+    width : 40px;
+  }
+
+  #my-cart button{
+    width : 50%;
+    margin-left : 50%;
+    padding :10px;
+    background-color : #333;
+    color : white;
+    border:none;
+  }
+
+  #my-cart button:hover{
+    background-color : cyan;
+    transition : 0.125s;
+    box-shadow : 2px 2px 2px black;
+  }
+  
 </style>

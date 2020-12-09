@@ -77,7 +77,7 @@ async function register(res, email, password){
   
   /* On compte le nombre de tuple renvoyer par la requête ci-dessus. Si le résultat est égal ou supérieur à 1, on renvoit une erreur */
   if(result1.rowCount >= 1){
-    res.status(400).json({message : 'User already registered with this email and password'})
+    res.status(400).json({message : 'Utilisateur déjà enregistré avec cette adresse mail', valid:false})
   }
   /* Sinon, on insere le nouvelle utilisateur dans la table 'users' le nouvelle utilisateur  */
   else{
@@ -87,7 +87,7 @@ async function register(res, email, password){
       text : sql2,
       values : [email, hash]
     })
-    res.json({message : 'Successfully registered'})
+    res.json({message : 'Inscription réussi', valid:true})
   }
 }
 
@@ -98,7 +98,7 @@ async function register(res, email, password){
  */
 router.post('/login', (req, res) => {
   if(req.session.userId != null){
-    res.status(401).json({message:'User already authentified in this session'})
+    res.status(401).json({message:'Utilisateur déjà connecté sur cette session', valid: false})
   }else{
     const email = req.body.email
     const password = req.body.password
@@ -120,13 +120,13 @@ async function login(res, req, email, password){
     if(await bcrypt.compare(password, result.rows[0].password)){
       req.session.userId = result.rows[0].id
       console.log(req.session)
-      res.json({message: 'Successfully logged in'})
+      res.json({message: 'Connexion réussi', valid: true})
     }else{
-      res.status(400).json({message: 'Wrong password'})
+      res.status(400).json({message: 'Mauvais mot de passe', valid: false})
     }
   }
   else{
-    res.status(404).json({message: 'User not found in database'})
+    res.status(404).json({message: 'Utilisateur inexistant dans la base de donnée', valid: false})
   }
 }
 
@@ -170,11 +170,11 @@ router.post('/panier', (req, res) => {
 
   /* existIn est une fonction que nous avons ajouté pour la vérification de l'existence d'un id dans une liste*/
   if(!existIn(articles, id)){
-    res.status(404).json({message:'Article not found'})
+    res.status(404).json({message:'Article non trouvé'})
     return
   }
   else if(isNaN(qte) || qte <= 0){
-    res.status(501).json({message:'Invalid quantity'})
+    res.status(501).json({message:'Mauvaise quantité'})
     return
   }
   else{
@@ -185,7 +185,7 @@ router.post('/panier', (req, res) => {
 
     req.session.panier.articles.forEach(a => {
       if(a.id === article.id){
-        res.status(400).json({message:'Article already present in the cart'})
+        res.status(400).json({message:'Article déjà présent dans le panier'})
         return
       }
     })
@@ -204,7 +204,7 @@ router.post('/panier/pay', (req, res) => {
     req.session.destroy()
     return res.json({message :'Merci pour votre achat', valid: true})
   }else{
-    return res.json({message : 'Cannot proceed to purchase : user not connected', valid: false})
+    return res.json({message : 'Vous devez être connecté pour valider le paiement', valid: false})
   }
 })
 
@@ -217,9 +217,9 @@ router.put('/panier/:articleId', (req, res) => {
   const qte= parseInt(req.body.qte)
 
   if(!existIn(req.session.panier.articles, id)){
-    res.status(404).json({ message:'Article not found in the cart'})
+    res.status(404).json({ message:"Article non trouvé"})
   }else if(isNaN(qte) || qte <= 0){
-    res.status(400).json({ message:'Invalid quantity'})
+    res.status(400).json({ message:'Quantité invalide'})
   } else{
     req.session.panier.articles.find(a => a.id === id).qte = qte
     res.json(req.session.panier.articles)
@@ -233,7 +233,7 @@ router.put('/panier/:articleId', (req, res) => {
 router.delete('/panier/:articleId', (req, res) => {
   const id= parseInt(req.params.articleId)
   if(!existIn(req.session.panier.articles, id)){
-    res.status(404).json({ message:'Article not found in the cart'})
+    res.status(404).json({ message:'Article non trouvé'})
   } else{
     var index = req.session.panier.articles.findIndex(a => a.id === id)
     console.log(index)

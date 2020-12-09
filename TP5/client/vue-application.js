@@ -71,17 +71,28 @@ var app = new Vue({
     },
 
     async registerUser(newUser){
-      await axios.post('/api/register', newUser)
+      await axios.post('/api/register', newUser).then(function(res){
+        if(res.data.valid)
+          router.push('/login')
+        else
+          alert(res.data.message)
+      })
     },
 
     async loginUser(user){
-      await axios.post('/api/login', user)
+      await axios.post('/api/login', user).then(function(res){
+        if(res.data.valid)
+          router.push('/')
+        else 
+          alert(res.data.message)
+      })
     },
 
     async payCart(articles){
       await axios.post('/api/panier/pay').then(function(res) {
         if(res.data.valid){
           alert(res.data.message)
+          router.push('/')
         }else{
           alert(res.data.message)
           router.push('/login')
