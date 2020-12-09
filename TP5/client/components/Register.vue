@@ -8,8 +8,7 @@
             <div><input v-model="newUser.password" type="password" placeholder="Mot de passe" name="password" required></div>
             <div><label for="confirmPassword"> Confirmer le mot de passe </label></div>
             <div><input v-model="newUser.confirmPassword" type="password" placeholder="Confirmer mot de passe" name="confirmPassword" required></div>
-            <div><input type="submit" value="S'inscrire"></div>
-            <div><a v-on:click="redirectToLog"> Déjà inscrit ? </a>
+            <div id="buttons-form"><a v-on:click="redirectToLog"> Déjà inscrit ? </a><input type="submit" value="S'inscrire"></div>
         </fieldset> 
     </form>
 </template>
@@ -89,14 +88,36 @@ module.exports = {
         padding : 10px;
     }
 
+     #register-form #buttons-form{
+        display:flex;
+        width : 100%;
+        flex-wrap : nowrap;
+        flex-direction : row;
+        justify-content: space-between;
+    }
+
     #register-form fieldset a{
+        flex : 1;
         color : white;
+        font-size : 12px;
         text-decoration: underline;
     }
 
     #register-form fieldset a:hover{
         color : cyan;
         cursor : pointer;
+    }
+
+    #register-form fieldset input[type="submit"]{
+        background-color : #ccc;
+        flex : 1;
+        border: none;
+    }
+
+    #register-form fieldset input[type="submit"]:hover{
+        background-color : cyan;
+        box-shadow : 2px 2px 2px black;
+        transition : 0.125s;
     }
 
 </style>
